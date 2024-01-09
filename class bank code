@@ -1,0 +1,123 @@
+import java.util.Scanner;
+
+class Account {
+    String customerName;
+    int accountNumber;
+    String accountType;
+    double balance;
+
+    public Account(String customerName, int accountNumber, String accountType) {
+        this.customerName = customerName;
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+        this.balance = 0;
+    }
+
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposit successful. Updated balance: " + balance);
+    }
+
+    public void displayBalance() {
+        System.out.println("Account Balance: " + balance);
+    }
+}
+
+class CurAcct extends Account {
+    double minBalance;
+    double serviceCharge;
+
+    public CurAcct(String customerName, int accountNumber) {
+        super(customerName, accountNumber, "Current");
+        this.minBalance = 1000; // Minimum balance for current account
+        this.serviceCharge = 50; // Service charge if balance falls below minimum
+    }
+
+    @Override
+    public void deposit(double amount) {
+        super.deposit(amount);
+        checkMinBalance();
+    }
+
+    @Override
+    public void displayBalance() {
+        super.displayBalance();
+        checkMinBalance();
+    }
+
+    private void checkMinBalance() {
+        if (balance < minBalance) {
+            balance -= serviceCharge;
+            System.out.println("Service charge applied. Updated balance: " + balance);
+        }
+    }
+}
+
+class SavAcct extends Account {
+    double interestRate;
+
+    public SavAcct(String customerName, int accountNumber) {
+        super(customerName, accountNumber, "Savings");
+        this.interestRate = 0.05; // 5% interest rate for savings account
+    }
+
+    public void computeInterest() {
+        double interest = balance * interestRate;
+        balance += interest;
+        System.out.println("Interest computed and deposited. Updated balance: " + balance);
+    }
+
+    @Override
+    public void displayBalance() {
+        super.displayBalance();
+        computeInterest();
+    }
+
+    public void withdraw(double amount) {
+        if (balance >= amount) {
+            balance -= amount;
+            System.out.println("Withdrawal successful. Updated balance: " + balance);
+        } else {
+            System.out.println("Insufficient funds for withdrawal.");
+        }
+    }
+}
+
+public class Bank {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Creating a current account
+        System.out.println("Enter customer name for current account:");
+        String currentCustomerName = scanner.nextLine();
+        System.out.println("Enter account number for current account:");
+        int currentAccountNumber = scanner.nextInt();
+        CurAcct currentAccount = new CurAcct(currentCustomerName, currentAccountNumber);
+
+        System.out.println("Enter the deposit amount for current account:");
+        double currentDepositAmount = scanner.nextDouble();
+        currentAccount.deposit(currentDepositAmount);
+        currentAccount.displayBalance();
+
+        // Creating a savings account
+        System.out.println("Enter customer name for savings account:");
+        scanner.nextLine(); // Consume the newline character
+        String savingsCustomerName = scanner.nextLine();
+        System.out.println("Enter account number for savings account:");
+        int savingsAccountNumber = scanner.nextInt();
+        SavAcct savingsAccount = new SavAcct(savingsCustomerName, savingsAccountNumber);
+
+        System.out.println("Enter the deposit amount for savings account:");
+        double savingsDepositAmount = scanner.nextDouble();
+        savingsAccount.deposit(savingsDepositAmount);
+        savingsAccount.displayBalance();
+
+        System.out.println("Enter the withdrawal amount for savings account:");
+        double savingsWithdrawalAmount = scanner.nextDouble();
+        savingsAccount.withdraw(savingsWithdrawalAmount);
+        System.out.println("**************************");
+        System.out.println("Siri Sathish 1BM22CS280");
+
+        scanner.close();
+    }
+}

@@ -1,0 +1,72 @@
+
+class WrongAgeException extends Exception{
+WrongAgeException(String message){
+super(message);
+}
+}
+
+//class father
+class Father{
+int age;
+Father(int age) throws WrongAgeException{
+if(age<0){
+throw new WrongAgeException("Age cannot be negative");
+}
+this.age = age;
+}
+int getAge(){
+return age;
+}
+}
+
+class Son extends Father{
+int sonAge;
+
+Son(int fatherAge, int sonAge) throws WrongAgeException{
+super(fatherAge);
+
+if(sonAge>=fatherAge){
+throw new WrongAgeException("Son's age should be less than Father's age.");
+}
+
+this.sonAge = sonAge;
+}
+
+ int getSonAge() {
+        return sonAge;
+    }
+
+} 
+
+
+public class InheritanceExceptionHandlingDemo {
+    public static void main(String[] args) {
+        try {
+            
+            Father father = new Father(40);
+
+           
+            Son son = new Son(father.getAge(), 20);
+
+            
+            System.out.println("Father's Age: " + father.getAge());
+            System.out.println("Son's Age: " + son.getSonAge());
+  
+           
+            System.out.println("When the  son's age is 30 and father's age is 35 ");
+            Son invalidSon = new Son(30, 35); // This will throw an exception
+
+          
+
+           
+            
+
+        } catch (WrongAgeException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+   finally{
+
+System.out.println("Siri Sathish 1BM22CS280");
+}
+    }
+}

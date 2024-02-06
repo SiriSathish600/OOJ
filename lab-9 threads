@@ -1,0 +1,44 @@
+class BMSRunnable implements Runnable {
+    @Override
+    public void run() {
+        for(int i=0;i<=4;i++) {
+            System.out.println("BMS College of Engineering");
+            try {
+                Thread.sleep(10000); // Sleep for 10 seconds
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+class CSERunnable implements Runnable {
+    @Override
+    public void run() {
+         for(int i=0;i<=4;i++) {
+            System.out.println("CSE");
+            try {
+                Thread.sleep(2000); // Sleep for 2 seconds
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+public class MainThreads {
+    public static void main(String[] args) {
+        // Creating instances of the runnables
+        Runnable bmsRunnable = new BMSRunnable();
+        Runnable cseRunnable = new CSERunnable();
+
+        // Creating threads with the runnables
+        Thread bmsThread = new Thread(bmsRunnable);
+        Thread cseThread = new Thread(cseRunnable);
+
+        // Starting the threads
+        bmsThread.start();
+        cseThread.start();
+        System.out.println("Siri Sathish 1BM22CS280");
+    }
+}
